@@ -63,7 +63,7 @@ public class StudentiService {
                         .body("Student cu id [" + studenti.getId() + "] not found"));
     }
 
-    public ResponseEntity<String> deleteStudent(int id) {
+    public ResponseEntity<String> deleteStudent (int id) {
         Optional<Studenti> studenti = studentRepository.findById(id);
         if (studenti.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

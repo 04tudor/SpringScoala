@@ -20,6 +20,7 @@ public class StudentiController {
     public StudentiController(StudentiService studentiService){
         this.studentiService=studentiService;
     }
+
     @GetMapping("/get")
     public List<StudentiDTO> getAllStudents() {
         return studentiService.getAllStudents();
@@ -48,7 +49,5 @@ public class StudentiController {
         studentiService.deleteStudent(id);
         return  ResponseEntity.accepted().body("Studentul a fost Sters");
     }
-
-
 
 }
