@@ -2,9 +2,112 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoala</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 30px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
+
+<div class="container">
+    <h1>Bine Ati Venit</h1>
+
+    <h3>Studenti</h3>
+    <div class="button-container">
+        <button class="action-button" onclick="redirectTo('Studenti/getAll.html')">Get All</button>
+        <button class="action-button" onclick="redirectTo('Studenti/create.html')">Create</button>
+        <button class="action-button" onclick="redirectTo('Studenti/delete.html')">Delete</button>
+        <button class="action-button" onclick="redirectTo('Studenti/update.html')">Update</button>
+        <button class="action-button" onclick="redirectTo('Studenti/findById.html')">Find By Id</button>
+        <button class="action-button" onclick="redirectTo('Studenti/deletedStudents.html')">Deleted Students</button>
+        <button class="action-button" onclick="redirectTo('Studenti/restantieri.html')">Studenti Restantieri</button>
+        <button class="action-button" onclick="redirectTo('Studenti/descrescator.html')">Studenti Descrescator medie</button>
+    </div>
+    <h3>Note</h3>
+
+    <div class="button-container">
+        <button class="action-button" onclick="redirectTo('Note/getAll.html')">Get All </button>
+        <button class="action-button" onclick="redirectTo('Note/create.html')">Create </button>
+        <button class="action-button" onclick="redirectTo('Note/delete.html')">Delete </button>
+        <button class="action-button" onclick="redirectTo('Note/update.html')">Update </button>
+        <button class="action-button" onclick="redirectTo('Note/findById.html')">Find by Id</button>
+        <button class="action-button" onclick="redirectTo('Note/mediiAdmise.html')">Medii Admise</button>
+        <button class="action-button" onclick="redirectTo('Note/mediiSemestriale.html')">Medii Semestriale</button>
+
+
+    </div>
+
+    <h3>Grupe</h3>
+
+    <div class="button-container">
+        <button class="action-button" onclick="redirectTo('Grupe/getAll.html')">Get All </button>
+        <button class="action-button" onclick="redirectTo('Grupe/create.html')">Create </button>
+        <button class="action-button" onclick="redirectTo('Grupe/delete.html')">Delete </button>
+        <button class="action-button" onclick="redirectTo('Grupe/update.html')">Update </button>
+        <button class="action-button" onclick="redirectTo('Grupe/findById.html')">Find by Id</button>
+        <button class="action-button" onclick="redirectTo('Grupe/mediaGrupa.html')">Media pe Grupa</button>
+        <button class="action-button" onclick="redirectTo('Grupe/SumaOreAbsentate.html')">Suma Ore Absentate</button>
+
+    </div>
+</div>
+
+<script>
+    function redirectTo(page) {
+        window.location.href = page;
+    }
+</script>
 
 </body>
 </html>

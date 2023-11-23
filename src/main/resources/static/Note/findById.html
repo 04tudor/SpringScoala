@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Student by ID</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 40%;
+            position: relative;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 80%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button class="home-button" onclick="redirectTo('index.html')">Acasa</button>
+    <h1>Cautare Student dupa ID</h1>
+
+    <form id="findStudentForm">
+        <label for="findStudentId">Student ID:</label>
+        <input type="text" id="findStudentId" name="findStudentId" required>
+
+        <button type="button" onclick="findStudent()">Cauta Student</button>
+    </form>
+
+    <table id="studentTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nume</th>
+            <th>Grupa ID</th>
+        </tr>
+        </thead>
+        <tbody id="studentTableBody"></tbody>
+    </table>
+</div>
+
+<script>
+    function findStudent() {
+        var studentId = document.getElementById("findStudentId").value;
+
+        fetch(`http://localhost:8080/studenti/find/${studentId}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else if (response.status === 404) {
+                    throw new Error('Student not found');
+                } else {
+                    throw new Error(response.statusText);
+                }
+            })
+            .then(student => {
+                var studentTable = document.getElementById('studentTable');
+                var studentTableBody = document.getElementById('studentTableBody');
+
+                studentTableBody.innerHTML = "";
+
+                var row = document.createElement('tr');
+                row.innerHTML = `<td>${student.id}</td><td>${student.nume} ${student.prenume}</td><td>${student.grupaID}</td>`;
+                studentTableBody.appendChild(row);
+
+                studentTable.style.display = "table";
+            })
+            .catch(error => {
+                var studentTable = document.getElementById('studentTable');
+                studentTable.style.display = "none";
+
+                console.error('Error:', error);
+            });
+    }
+
+    function redirectTo(page) {
+        const parentDirectory = window.location.pathname.includes('/static/') ? '../' : '';
+        window.location.href = parentDirectory + page;
+    }
+</script>
+
+</body>
+</html>
