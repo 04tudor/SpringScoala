@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/note")
@@ -49,5 +50,15 @@ public class NoteController {
         noteService.deleteNote(id);
         return  ResponseEntity.accepted().body("Nota a fost Stearsa");
     }
+    @GetMapping("/mediiAdmise")
+    public List<String> getMediiAdmise() {
 
+        return noteService.getMediiAdmise();
+    }
+
+    @GetMapping("/mediiSemestriale")
+    public List<String> getMediiSemestriale() {
+
+        return noteService.getMediiSemestriale();
+    }
 }

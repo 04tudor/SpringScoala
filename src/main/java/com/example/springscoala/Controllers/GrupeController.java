@@ -50,5 +50,13 @@ public GrupeController(GrupeService grupeService){
         return  ResponseEntity.accepted().body("Grupa a fost Stearsa");
     }
 
+    @GetMapping("/mediaGrupa")
+    public List<String> averageGroup() {
+        return grupeService.averageGroup();
+    }
 
+    @GetMapping("/sumaOreAbsentate")
+    public List<String> sumaOreAbsentate() {
+        return grupeService.sumaOreAbsentate();
+    }
 }

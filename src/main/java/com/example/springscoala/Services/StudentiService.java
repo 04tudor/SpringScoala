@@ -70,7 +70,39 @@ public class StudentiService {
                     .body("Student cu id [" + id + "] not found");
         }
         studentRepository.delete(studenti.get());
+        insertedTableDeleted(studenti.get());
         return ResponseEntity.ok("Student with cod [" + id + "] deleted successfully");    }
 
+    public void insertedTableDeleted(Studenti student){
+        studentRepository.insertTableDeleted(
+                student.getId(),
+                student.getNume(),
+                student.getPrenume(),
+                student.getGrupaID()
+        );  }
 
+    public List<StudentiDTO> deletedStudents(){
+        List<Studenti> studentiList = studentRepository.deletedStudents();
+
+        return studentiList.stream()
+                .map(studentMapper)
+                .collect(Collectors.toList());
+    }
+
+    public List<StudentiDTO>restantieri(){
+        List<Studenti> studentiList = studentRepository.studentiRestantieri();
+
+        return studentiList.stream()
+                .map(studentMapper)
+                .collect(Collectors.toList());
+
+    }
+
+    public List<StudentiDTO>StudentiDescrescatorMedie(){
+        List<Studenti> studentiList = studentRepository.studentiMedieDescrescator();
+        return studentiList.stream()
+                .map(studentMapper)
+                .collect(Collectors.toList());
+
+    }
 }

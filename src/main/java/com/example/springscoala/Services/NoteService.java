@@ -2,14 +2,13 @@ package com.example.springscoala.Services;
 
 import com.example.springscoala.DTO.Mapper.NoteMapper;
 import com.example.springscoala.DTO.Records.NoteDTO;
-import com.example.springscoala.DTO.Records.StudentiDTO;
 import com.example.springscoala.Entity.Note;
-import com.example.springscoala.Entity.Studenti;
 import com.example.springscoala.Repositoryes.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +70,41 @@ public class NoteService {
         }
         noteRepository.delete(note.get());
         return ResponseEntity.ok("Nota with cod [" + id + "] deleted successfully");    }
+    @Transactional
+    public void mediiSemestriale() {
+        noteRepository.clearTableMediiSemestriale();
+        noteRepository.insertMediiSemestriale();
+    }
 
+    @Transactional
+    public void mediiAdmise() {
+        noteRepository.clearTableMedii();
+        noteRepository.insertMediiAdmise();
+    }
+
+    public List<String> getMediiAdmise() {
+        mediiAdmise();
+        List<Object[]> results = noteRepository.mediiAdmise();
+        return results.stream()
+                .map(row -> {
+                    String id = String.valueOf(row[0]);
+                    String medieSemestriala = String.valueOf(row[1]);
+                    String oreAbsentateNemotivate = String.valueOf(row[2]);
+                    return "ID: " + id + ", Medie Semestriala: " + medieSemestriala + ", Ore Absentate Nemotivate: " + oreAbsentateNemotivate;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getMediiSemestriale() {
+        mediiSemestriale();
+        List<Object[]> results = noteRepository.mediiSemestriale();
+        return results.stream()
+                .map(row -> {
+                    String id = String.valueOf(row[0]);
+                    String medieSemestriala = String.valueOf(row[1]);
+                    String oreAbsentateNemotivate = String.valueOf(row[2]);
+                    return "ID: " + id + ", Medie Semestriala: " + medieSemestriala + ", Ore Absentate Nemotivate: " + oreAbsentateNemotivate;
+                })
+                .collect(Collectors.toList());
+    }
 }

@@ -1,11 +1,8 @@
 package com.example.springscoala.Controllers;
-
-
 import com.example.springscoala.DTO.Records.StudentiDTO;
 import com.example.springscoala.Entity.Studenti;
 import com.example.springscoala.Services.StudentiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,5 +46,16 @@ public class StudentiController {
         studentiService.deleteStudent(id);
         return  ResponseEntity.accepted().body("Studentul a fost Sters");
     }
-
+    @GetMapping("/deletedStudents")
+    public List<StudentiDTO> deleteStudentTable() {
+        return studentiService.deletedStudents();
+    }
+    @GetMapping("/restantieri")
+    public List<StudentiDTO> restantieri() {
+        return studentiService.restantieri();
+    }
+    @GetMapping("/descrescator")
+    public List<StudentiDTO> studentiDescrescatorMedie() {
+        return studentiService.StudentiDescrescatorMedie();
+    }
 }

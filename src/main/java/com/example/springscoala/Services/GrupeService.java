@@ -69,5 +69,26 @@ public class GrupeService  {
         }
         grupeRepository.delete(optionalGrupe.get());
         return ResponseEntity.ok("Student with cod [" + id + "] deleted successfully");    }
+    public List<String> averageGroup() {
+        List<Object[]> results = grupeRepository.averageGroup();
 
+        return results.stream()
+                .map(row -> {
+                    String groupName = (String) row[0];
+                    Double averageNotaSemestriala = (Double) row[1];
+                    return "Grupa: " + groupName + ", Medie Nota Semestriala: " + averageNotaSemestriala;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<String> sumaOreAbsentate() {
+        List<Object[]> results = grupeRepository.sumOreAbsentate();
+        return results.stream()
+                .map(row -> {
+                    String groupName = (String) row[0];
+                    Long totalUnexcusedAbsences = ((Number) row[1]).longValue();
+                    return "Grupa: " + groupName + ", Total Absente Nemotivate: " + totalUnexcusedAbsences;
+                })
+                .collect(Collectors.toList());
+    }
 }
