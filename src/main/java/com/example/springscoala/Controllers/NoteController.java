@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/note")
+@CrossOrigin
+
 public class NoteController {
 
     private NoteService noteService;

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Student</title>
+    <title>Update Group</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -30,28 +30,27 @@
         }
 
         form {
-            width: 100%;
             margin-top: 20px;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
+            color: #555;
         }
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 16px;
             box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 16px;
             cursor: pointer;
             background-color: #4CAF50;
@@ -87,55 +86,46 @@
 
 <div class="container">
     <button class="home-button" onclick="redirectTo('index.html')">Home</button>
-    <h1>Update Student</h1>
+    <h1>Update Grupa</h1>
 
-    <form id="updateStudentForm">
-        <label for="updateStudentId">Student ID:</label>
-        <input type="text" id="updateStudentId" name="updateStudentId" required>
-        <label for="updateStudentNume"> Nume Nou:</label>
-        <input type="text" id="updateStudentNume" name="updateStudentNume" required>
-        <label for="updateStudentPrenume"> Prenume Nou:</label>
-        <input type="text" id="updateStudentPrenume" name="updateStudentPrenume" required>
-        <label for="updateGroupID">Grupa ID Nou:</label>
-        <input type="text" id="updateGroupID" name="updateGroupID" required>
+    <form id="updateGroupForm">
+        <label for="updateGroupId">Grupa ID:</label>
+        <input type="text" id="updateGroupId" name="updateGroupId" required>
 
-        <button type="button" onclick="updateStudent()">Update Student</button>
+        <label for="updateGroupName"> Nume Grupa nou:</label>
+        <input type="text" id="updateGroupName" name="updateGroupName" required>
+
+        <button type="button" onclick="updateGroup()">Update Grupa</button>
     </form>
 </div>
 
 <script>
-    function updateStudent() {
-        var studentId = document.getElementById("updateStudentId").value;
-        var studentNume = document.getElementById("updateStudentNume").value;
-        var studentPrenume = document.getElementById("updateStudentPrenume").value;
-        var groupID = document.getElementById("updateGroupID").value;
+    function updateGroup() {
+        var groupId = document.getElementById("updateGroupId").value;
+        var newGroupName = document.getElementById("updateGroupName").value;
 
-        var updatedStudent = {
-            id: studentId,
-            nume: studentNume,
-            prenume: studentPrenume,
-            grupaID: groupID
+        var updatedGroup = {
+            id: groupId,
+            numeGrupa: newGroupName
         };
 
-        fetch(`http://localhost:8080/studenti/update`, {
+        fetch(`http://localhost:8080/grupe/update`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updatedStudent),
+            body: JSON.stringify(updatedGroup),
         })
             .then(response => {
                 if (response.ok) {
-                    alert('Student updated successfully!');
+                    alert("Group updated successfully");
                 } else if (response.status === 404) {
-                    throw new Error('Student not found');
+                    alert("Group not found");
                 } else {
-                    throw new Error(response.statusText);
+                    alert("Error updating group. Please check the data and try again.");
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
     }
 
     function redirectTo(page) {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete Student</title>
+    <title>Delete Note</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -86,21 +86,21 @@
 
 <div class="container">
     <button class="home-button" onclick="redirectTo('index.html')">Acasa</button>
-    <h1>Delete Student</h1>
+    <h1>Sterge Nota</h1>
 
-    <form id="deleteStudentForm">
-        <label for="deleteStudentId">Student ID:</label>
-        <input type="text" id="deleteStudentId" name="deleteStudentId" required>
+    <form id="deleteNoteForm">
+        <label for="deleteNoteId">ID Nota:</label>
+        <input type="text" id="deleteNoteId" name="deleteNoteId" required>
 
-        <button type="button" onclick="deleteStudent()">Sterge Student</button>
+        <button type="button" onclick="deleteNote()">Sterge Nota</button>
     </form>
 </div>
 
 <script>
-    function deleteStudent() {
-        var studentId = document.getElementById("deleteStudentId").value;
+    function deleteNote() {
+        var noteId = document.getElementById("deleteNoteId").value;
 
-        fetch(`http://localhost:8080/studenti/delete/${studentId}`, {
+        fetch(`http://localhost:8080/note/delete/${noteId}`, {
             method: 'DELETE',
         })
             .then(response => {
@@ -114,7 +114,7 @@
                 alert(responseText); // Display the response text
             })
             .catch(error => {
-                alert("Error deleting student. Please check the ID and try again.");
+                alert("Error deleting note. Please check the ID and try again.");
                 console.error('Error:', error);
             });
     }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>All Students</title>
+    <title>All Notes</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -74,30 +74,31 @@
 
 <div class="container">
     <button class="home-button" onclick="redirectTo('index.html')">Acasa</button>
-    <h1>All Students</h1>
+    <h1>All Notes</h1>
 
     <table>
         <thead>
         <tr>
             <th>ID</th>
-            <th>Nume</th>
-            <th>Grupa ID</th>
+            <th>Cod Student</th>
+            <th>Nota Semestru</th>
+            <th>Absente Nemotivate</th>
         </tr>
         </thead>
-        <tbody id="studentTableBody">
+        <tbody id="noteTableBody">
         </tbody>
     </table>
 </div>
 
 <script>
-    fetch('http://localhost:8080/studenti/get')
+    fetch('http://localhost:8080/note/get')
         .then(response => response.json())
         .then(data => {
-            const studentTableBody = document.getElementById('studentTableBody');
-            data.forEach(student => {
+            const noteTableBody = document.getElementById('noteTableBody');
+            data.forEach(note => {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${student.id}</td><td>${student.nume} ${student.prenume}</td><td>${student.grupaID}</td>`;
-                studentTableBody.appendChild(row);
+                row.innerHTML = `<td>${note.id}</td><td>${note.codStudent}</td><td>${note.notaSemestru}</td><td>${note.absenteNemotivate}</td>`;
+                noteTableBody.appendChild(row);
             });
         })
         .catch(error => console.error('Error:', error));

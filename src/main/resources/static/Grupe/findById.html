@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Find Student by ID</title>
+    <title>Find Group by ID</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -110,57 +110,56 @@
 <body>
 
 <div class="container">
-    <button class="home-button" onclick="redirectTo('index.html')">Acasa</button>
-    <h1>Cautare Student dupa ID</h1>
+    <button class="home-button" onclick="redirectTo('index.html')">Home</button>
+    <h1>Cautare Grupa dupa ID</h1>
 
-    <form id="findStudentForm">
-        <label for="findStudentId">Student ID:</label>
-        <input type="text" id="findStudentId" name="findStudentId" required>
+    <form id="findGroupForm">
+        <label for="findGroupId"> ID:</label>
+        <input type="text" id="findGroupId" name="findGroupId" required>
 
-        <button type="button" onclick="findStudent()">Cauta Student</button>
+        <button type="button" onclick="findGroup()">Find Group</button>
     </form>
 
-    <table id="studentTable">
+    <table id="groupTable">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Nume</th>
-            <th>Grupa ID</th>
+            <th>Nume Grupa</th>
         </tr>
         </thead>
-        <tbody id="studentTableBody"></tbody>
+        <tbody id="groupTableBody"></tbody>
     </table>
 </div>
 
 <script>
-    function findStudent() {
-        var studentId = document.getElementById("findStudentId").value;
+    function findGroup() {
+        var groupId = document.getElementById("findGroupId").value;
 
-        fetch(`http://localhost:8080/studenti/find/${studentId}`)
+        fetch(`http://localhost:8080/grupe/find/${groupId}`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
                 } else if (response.status === 404) {
-                    throw new Error('Student not found');
+                    throw new Error('Group not found');
                 } else {
                     throw new Error(response.statusText);
                 }
             })
-            .then(student => {
-                var studentTable = document.getElementById('studentTable');
-                var studentTableBody = document.getElementById('studentTableBody');
+            .then(group => {
+                var groupTable = document.getElementById('groupTable');
+                var groupTableBody = document.getElementById('groupTableBody');
 
-                studentTableBody.innerHTML = "";
+                groupTableBody.innerHTML = "";
 
                 var row = document.createElement('tr');
-                row.innerHTML = `<td>${student.id}</td><td>${student.nume} ${student.prenume}</td><td>${student.grupaID}</td>`;
-                studentTableBody.appendChild(row);
+                row.innerHTML = `<td>${group.id}</td><td>${group.numeGrupa}</td>`;
+                groupTableBody.appendChild(row);
 
-                studentTable.style.display = "table";
+                groupTable.style.display = "table";
             })
             .catch(error => {
-                var studentTable = document.getElementById('studentTable');
-                studentTable.style.display = "none";
+                var groupTable = document.getElementById('groupTable');
+                groupTable.style.display = "none";
 
                 console.error('Error:', error);
             });

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>All Students</title>
+    <title>All Groups</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -10,7 +10,9 @@
             padding: 0;
             background-color: #f8f9fa;
             display: flex;
-            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .container {
@@ -19,8 +21,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             border-radius: 10px;
-            width: 80%;
-            margin: auto;
+            width: 60%;
             position: relative;
         }
 
@@ -44,7 +45,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #dc3545; /* Red color */
             color: white;
         }
 
@@ -57,7 +58,7 @@
             top: 10px;
             left: 10px;
             padding: 10px;
-            background-color: #4CAF50;
+            background-color: #dc3545; /* Red color */
             color: white;
             border: none;
             border-radius: 5px;
@@ -66,43 +67,49 @@
         }
 
         .home-button:hover {
-            background-color: #45a049;
+            background-color: #c82333;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <button class="home-button" onclick="redirectTo('index.html')">Acasa</button>
-    <h1>All Students</h1>
+    <button class="home-button" onclick="redirectTo('index.html')">Home</button>
+    <h1>Toate Grupele</h1>
 
-    <table>
+    <table id="allGroupsTable">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Nume</th>
-            <th>Grupa ID</th>
+            <th>Nume Grupa</th>
         </tr>
         </thead>
-        <tbody id="studentTableBody">
-        </tbody>
+        <tbody id="allGroupsTableBody"></tbody>
     </table>
 </div>
 
 <script>
-    fetch('http://localhost:8080/studenti/get')
-        .then(response => response.json())
-        .then(data => {
-            const studentTableBody = document.getElementById('studentTableBody');
-            data.forEach(student => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${student.id}</td><td>${student.nume} ${student.prenume}</td><td>${student.grupaID}</td>`;
-                studentTableBody.appendChild(row);
-            });
-        })
-        .catch(error => console.error('Error:', error));
+    document.addEventListener("DOMContentLoaded", function () {
+        getAllGroups();
 
-    function redirectTo(page) {
+        function getAllGroups() {
+            fetch('http://localhost:8080/grupe/get')
+                .then(response => response.json())
+                .then(data => {
+                    const allGroupsTableBody = document.getElementById('allGroupsTableBody');
+                    allGroupsTableBody.innerHTML = "";
+
+                    data.forEach(group => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${group.id}</td><td>${group.numeGrupa}</td>`;
+                        allGroupsTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+    });   function redirectTo(page) {
         const parentDirectory = window.location.pathname.includes('/static/') ? '../' : '';
         window.location.href = parentDirectory + page;
     }

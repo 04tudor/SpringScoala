@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Student</title>
+    <title>Update Note</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -87,48 +87,48 @@
 
 <div class="container">
     <button class="home-button" onclick="redirectTo('index.html')">Home</button>
-    <h1>Update Student</h1>
+    <h1>Update Note</h1>
 
-    <form id="updateStudentForm">
-        <label for="updateStudentId">Student ID:</label>
-        <input type="text" id="updateStudentId" name="updateStudentId" required>
-        <label for="updateStudentNume"> Nume Nou:</label>
-        <input type="text" id="updateStudentNume" name="updateStudentNume" required>
-        <label for="updateStudentPrenume"> Prenume Nou:</label>
-        <input type="text" id="updateStudentPrenume" name="updateStudentPrenume" required>
-        <label for="updateGroupID">Grupa ID Nou:</label>
-        <input type="text" id="updateGroupID" name="updateGroupID" required>
+    <form id="updateNoteForm">
+        <label for="updateNoteId">Note ID:</label>
+        <input type="text" id="updateNoteId" name="updateNoteId" required>
+        <label for="updateCodStudent">Cod Student Nou:</label>
+        <input type="text" id="updateCodStudent" name="updateCodStudent" required>
+        <label for="updateNotaSemestru">Nota Semestru Noua:</label>
+        <input type="text" id="updateNotaSemestru" name="updateNotaSemestru" required>
+        <label for="updateAbsenteNemotivate">Absente Nemotivate Noi:</label>
+        <input type="text" id="updateAbsenteNemotivate" name="updateAbsenteNemotivate" required>
 
-        <button type="button" onclick="updateStudent()">Update Student</button>
+        <button type="button" onclick="updateNote()">Update Note</button>
     </form>
 </div>
 
 <script>
-    function updateStudent() {
-        var studentId = document.getElementById("updateStudentId").value;
-        var studentNume = document.getElementById("updateStudentNume").value;
-        var studentPrenume = document.getElementById("updateStudentPrenume").value;
-        var groupID = document.getElementById("updateGroupID").value;
+    function updateNote() {
+        var noteId = document.getElementById("updateNoteId").value;
+        var codStudent = document.getElementById("updateCodStudent").value;
+        var notaSemestru = document.getElementById("updateNotaSemestru").value;
+        var absenteNemotivate = document.getElementById("updateAbsenteNemotivate").value;
 
-        var updatedStudent = {
-            id: studentId,
-            nume: studentNume,
-            prenume: studentPrenume,
-            grupaID: groupID
+        var updatedNote = {
+            id: noteId,
+            codStudent: codStudent,
+            notaSemestru: notaSemestru,
+            absenteNemotivate: absenteNemotivate
         };
 
-        fetch(`http://localhost:8080/studenti/update`, {
+        fetch(`http://localhost:8080/note/update`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updatedStudent),
+            body: JSON.stringify(updatedNote),
         })
             .then(response => {
                 if (response.ok) {
-                    alert('Student updated successfully!');
+                    alert('Note updated successfully!');
                 } else if (response.status === 404) {
-                    throw new Error('Student not found');
+                    throw new Error('Note not found');
                 } else {
                     throw new Error(response.statusText);
                 }

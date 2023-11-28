@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Find Student by ID</title>
+    <title>Find Note by ID</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -111,56 +111,57 @@
 
 <div class="container">
     <button class="home-button" onclick="redirectTo('index.html')">Acasa</button>
-    <h1>Cautare Student dupa ID</h1>
+    <h1>Cautare Nota dupa ID</h1>
 
-    <form id="findStudentForm">
-        <label for="findStudentId">Student ID:</label>
-        <input type="text" id="findStudentId" name="findStudentId" required>
+    <form id="findNoteForm">
+        <label for="findNoteId">Nota ID:</label>
+        <input type="text" id="findNoteId" name="findNoteId" required>
 
-        <button type="button" onclick="findStudent()">Cauta Student</button>
+        <button type="button" onclick="findNote()">Cauta Nota</button>
     </form>
 
-    <table id="studentTable">
+    <table id="noteTable">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Nume</th>
-            <th>Grupa ID</th>
+            <th>Cod Student</th>
+            <th>Nota Semestru</th>
+            <th>Absente Nemotivate</th>
         </tr>
         </thead>
-        <tbody id="studentTableBody"></tbody>
+        <tbody id="noteTableBody"></tbody>
     </table>
 </div>
 
 <script>
-    function findStudent() {
-        var studentId = document.getElementById("findStudentId").value;
+    function findNote() {
+        var noteId = document.getElementById("findNoteId").value;
 
-        fetch(`http://localhost:8080/studenti/find/${studentId}`)
+        fetch(`http://localhost:8080/note/find/${noteId}`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
                 } else if (response.status === 404) {
-                    throw new Error('Student not found');
+                    throw new Error('Note not found');
                 } else {
                     throw new Error(response.statusText);
                 }
             })
-            .then(student => {
-                var studentTable = document.getElementById('studentTable');
-                var studentTableBody = document.getElementById('studentTableBody');
+            .then(note => {
+                var noteTable = document.getElementById('noteTable');
+                var noteTableBody = document.getElementById('noteTableBody');
 
-                studentTableBody.innerHTML = "";
+                noteTableBody.innerHTML = "";
 
                 var row = document.createElement('tr');
-                row.innerHTML = `<td>${student.id}</td><td>${student.nume} ${student.prenume}</td><td>${student.grupaID}</td>`;
-                studentTableBody.appendChild(row);
+                row.innerHTML = `<td>${note.id}</td><td>${note.codStudent}</td><td>${note.notaSemestru}</td><td>${note.absenteNemotivate}</td>`;
+                noteTableBody.appendChild(row);
 
-                studentTable.style.display = "table";
+                noteTable.style.display = "table";
             })
             .catch(error => {
-                var studentTable = document.getElementById('studentTable');
-                studentTable.style.display = "none";
+                var noteTable = document.getElementById('noteTable');
+                noteTable.style.display = "none";
 
                 console.error('Error:', error);
             });

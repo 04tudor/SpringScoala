@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete Student</title>
+    <title>Delete Group</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -53,7 +53,7 @@
             padding: 12px 24px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #ff0000;
+            background-color: #dc3545;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -61,7 +61,7 @@
         }
 
         button:hover {
-            background-color: #cc0000;
+            background-color: #c82333;
         }
 
         .home-button {
@@ -69,7 +69,7 @@
             top: 10px;
             left: 10px;
             padding: 10px;
-            background-color: #4CAF50; /* Green color for Home button */
+            background-color: #dc3545; /* Red color */
             color: white;
             border: none;
             border-radius: 5px;
@@ -78,45 +78,42 @@
         }
 
         .home-button:hover {
-            background-color: #45a049;
+            background-color: #c82333;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <button class="home-button" onclick="redirectTo('index.html')">Acasa</button>
-    <h1>Delete Student</h1>
+    <button class="home-button" onclick="redirectTo('index.html')">Home</button>
+    <h1>Sterge Grupa</h1>
 
-    <form id="deleteStudentForm">
-        <label for="deleteStudentId">Student ID:</label>
-        <input type="text" id="deleteStudentId" name="deleteStudentId" required>
+    <form id="deleteGroupForm">
+        <label for="groupID">Grupa ID:</label>
+        <input type="text" id="groupID" name="groupID" required>
 
-        <button type="button" onclick="deleteStudent()">Sterge Student</button>
+        <button type="button" onclick="deleteGroup()">Sterge Grupa</button>
     </form>
 </div>
 
 <script>
-    function deleteStudent() {
-        var studentId = document.getElementById("deleteStudentId").value;
+    function deleteGroup() {
+        var groupID = document.getElementById("groupID").value;
 
-        fetch(`http://localhost:8080/studenti/delete/${studentId}`, {
+        fetch(`http://localhost:8080/grupe/delete/${groupID}`, {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
         })
             .then(response => {
                 if (response.ok) {
-                    return response.text();
+                    alert("Group deleted successfully");
                 } else {
-                    throw new Error(response.statusText);
+                    alert("Error deleting group. Please check the ID and try again.");
                 }
             })
-            .then(responseText => {
-                alert(responseText); // Display the response text
-            })
-            .catch(error => {
-                alert("Error deleting student. Please check the ID and try again.");
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
     }
 
     function redirectTo(page) {
